@@ -1,0 +1,69 @@
+<mat-toolbar color="primary"> Upload </mat-toolbar>
+<div class="content">
+  <h1>Faça o upload dos arquivos</h1>
+  <form class="upload">
+    <div class="form-group">
+      <input
+        formControlName="file"
+        id="file"
+        type="file"
+        name="images[]"
+        class="form-control"
+        (change)="onFileChange($event)"
+        multiple
+      />
+    </div>
+  </form>
+
+  <div>
+    <table mat-table [dataSource]="body" class="mat-elevation-z8">
+      <!-- Position Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="arquivo">
+        <th mat-header-cell *matHeaderCellDef>Arquivo</th>
+        <td mat-cell *matCellDef="let element">{{ element.fileName }}</td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="enviado">
+        <th mat-header-cell *matHeaderCellDef>Enviado</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.uploaded ? "SIM" : "NÃO" }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+  <div class="button">
+    <button
+      [disabled]="submited"
+      (click)="openDialog()"
+      mat-raised-button
+      color="primary"
+    >
+      Enviar
+    </button>
+  </div>
+
+  <h1>Valores Por Região dos ultimos 10 anos</h1>
+
+  <canvas *ngIf="barChartData"
+    baseChart
+    class="chart"
+    [data]="barChartData"
+    [options]="barChartOptions"
+    [type]="barChartType"
+  >
+  </canvas>
+
+  <h1>Dado tratado</h1>
+
+  <div>{{agentes | json}}</div>
+</div>
